@@ -15,6 +15,7 @@ if (!testNumber) {
 let testRunner = new TestRunner();
 let testFile = getTestFile(testNumber);
 testRunner.run(testFile, (err, results) => {
+  results.uuid = uuid.trim();
   console.log("results to be submitted:", results);
 });
 
