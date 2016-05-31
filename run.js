@@ -19,7 +19,7 @@ testRunner.run(testFile, (err, results) => {
 });
 
 function getTestFile(testNumber) {
-  return `./tests/test_${padNumber(testNumber)}.js`;
+  return `./tests/test_${padNumber(testNumber, 2)}.js`;
 }
 
 function padNumber(num, length) {
