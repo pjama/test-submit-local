@@ -13,7 +13,19 @@ if (!testNumber) {
 }
 
 let testRunner = new TestRunner();
-let testFile = "./tests/test_01.js";
+let testFile = getTestFile(testNumber);
 testRunner.run(testFile, (err, results) => {
   console.log("results to be submitted:", results);
 });
+
+function getTestFile(testNumber) {
+  return `./tests/test_${padNumber(testNumber)}.js`;
+}
+
+function padNumber(num, length) {
+  var s = num+"";
+  while (s.length < length) {
+    s = "0" + s;
+  }
+  return s;
+}
