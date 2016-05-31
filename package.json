@@ -1,0 +1,14 @@
+{
+  "name": "test-runner",
+  "version": "1.0.0",
+  "description": "",
+  "main": "local-test.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node run.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
