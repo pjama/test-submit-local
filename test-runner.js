@@ -1,3 +1,5 @@
+'use strict';
+
 const fs      = require("fs");
 const Mocha   = require("mocha");
 
@@ -5,7 +7,7 @@ class TestRunner {
   constructor() {
     this.mocha = new Mocha();
   }
-  
+
   run(specFile, cb) {
     let results = { errors: [] };
     try {
@@ -14,14 +16,14 @@ class TestRunner {
           results.testResult = testResults;
           cb(null, results);
         });
-      
+
     } catch (e) {
       console.error(e);
       results.errors.push(e);
       cb(e, results);
     }
   }
-  
+
   runMocha(testFile, cb) {
     let promise = new Promise((resolve, reject) => {
       this.mocha.addFile(testFile);
