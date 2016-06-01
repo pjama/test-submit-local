@@ -1,6 +1,7 @@
 const fs          = require("fs");
-const TestRunner  = require("./test-runner");
-const SubmissionClient = require("./submission-client");
+
+const SubmissionClient  = require("./submission-client");
+const TestRunner        = require("./test-runner");
 
 let uuid = fs.readFileSync("./.uuid", "utf8");
 if (!uuid) {
@@ -14,8 +15,7 @@ if (!testNumber) {
 }
 
 let testRunner = new TestRunner();
-let testFile = getTestFile(testNumber);
-testRunner.run(testFile, (err, results) => {
+testRunner.run(testNumber, (err, results) => {
   results.uuid = uuid.trim();
   console.log("Submitting:", results);
   
@@ -26,15 +26,3 @@ testRunner.run(testFile, (err, results) => {
     }
   });
 });
-
-function getTestFile(testNumber) {
-  return `./tests/test_${padNumber(testNumber, 2)}.js`;
-}
-
-function padNumber(num, length) {
-  var s = num+"";
-  while (s.length < length) {
-    s = "0" + s;
-  }
-  return s;
-}
