@@ -1,5 +1,3 @@
-'use strict';
-
 const fs          = require("fs");
 const TestRunner  = require("./test-runner");
 
