@@ -9,20 +9,20 @@ class TestRunner {
     this.mocha = new Mocha();
   }
 
-  run(testNumber, cb) {
-    const codeFile = this.getCodeFile(testNumber);
-    const testFile = this.getTestFile(testNumber);
-    let results = { errors: [] };
-    
-    results.lintResults = this.runLint(codeFile);
+  run(testNumber, cb) {    
+    let results = {
+      testNumber: parseInt(testNumber), 
+      lintResults: this.runLint(testNumber),
+      testResult: null, // Mocha, next step
+      errors: []
+    };
     
     try {
-      this.runMocha(testFile)
+      this.runMocha(testNumber)
         .then((testResults) => {
           results.testResult = testResults;
           cb(null, results);
         });
-
     } catch (e) {
       console.error(e);
       results.errors.push(e);
@@ -30,17 +30,19 @@ class TestRunner {
     }
   }
 
-  runLint(codeFile) {
+  runLint(testNumber) {
     const lintOptions = { 
       rules: LINT_RULES,
       globals: { module: {} }
     };
+    const codeFile = this.getCodeFile(testNumber);
     const code = fs.readFileSync(codeFile, "utf8");
     return eslint.linter.verify(code, lintOptions);
   }
   
-  runMocha(testFile, cb) {
-    let promise = new Promise((resolve, reject) => {
+  runMocha(testNumber, cb) {
+    const testFile = this.getTestFile(testNumber);
+    return new Promise((resolve, reject) => {
       this.mocha.addFile(testFile);
       this.mocha
         .run()
@@ -48,7 +50,6 @@ class TestRunner {
           resolve(this.stats); // return test statistics
         });
     });
-    return promise;
   }
   
   getCodeFile(testNumber) {
