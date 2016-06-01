@@ -1,5 +1,6 @@
 const fs          = require("fs");
 const TestRunner  = require("./test-runner");
+const SubmissionClient = require("./submission-client");
 
 let uuid = fs.readFileSync("./.uuid", "utf8");
 if (!uuid) {
@@ -18,7 +19,6 @@ testRunner.run(testFile, (err, results) => {
   results.uuid = uuid.trim();
   console.log("Submitting:", results);
   
-  const SubmissionClient = require("./submission-client");
   const submissionClient = new SubmissionClient();
   submissionClient.submit(results, (err, response, body) => {
     if (err) {
