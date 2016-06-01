@@ -18,7 +18,15 @@ let testRunner = new TestRunner();
 let testFile = getTestFile(testNumber);
 testRunner.run(testFile, (err, results) => {
   results.uuid = uuid.trim();
-  console.log("results to be submitted:", results);
+  console.log("Submitting:", results);
+  
+  const SubmissionClient = require("./submission-client");
+  const submissionClient = new SubmissionClient();
+  submissionClient.submit(results, (err, response, body) => {
+    if (err) {
+      console.error(err);
+    }
+  });
 });
 
 function getTestFile(testNumber) {
