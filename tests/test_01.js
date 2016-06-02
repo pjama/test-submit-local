@@ -17,7 +17,6 @@ describe("Function", () => {
   });
   
   it("Should not use Math.sqrt", () => {
-    // let sqrtBack = Math.sqrt;
     let spySqrt = sinon.spy(Math, "sqrt");
     const pp = new PushPopper();
     pp.sqrt(4);
