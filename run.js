@@ -24,5 +24,6 @@ testRunner.run(testNumber, (err, results) => {
     if (err) {
       console.error(err);
     }
+    console.log("Response Body:", body);
   });
 });

@@ -13,14 +13,14 @@ class TestRunner {
     let results = {
       testNumber: parseInt(testNumber), 
       lintResults: this.runLint(testNumber),
-      testResult: null, // Mocha, next step
+      testResults: null, // Mocha, next step
       errors: []
     };
     
     try {
       this.runMocha(testNumber)
         .then((testResults) => {
-          results.testResult = testResults;
+          results.testResults = testResults;
           cb(null, results);
         });
     } catch (e) {

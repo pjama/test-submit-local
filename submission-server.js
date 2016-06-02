@@ -2,22 +2,29 @@
  * Listens to any POST requests and console.log body
  */
 
-const http = require("http");
-const fs = require("fs");
+const http  = require("http");
+const fs    = require("fs");
+
+const TestGrader = require("./test-grader");
+
 server = http.createServer( function(req, res) {
 
   console.dir(req.param);
   if (req.method == "POST") {
-      console.log("POST");
-      let body = "";
-      req.on("data", function (data) {
-          body += data;
-      });
-      req.on("end", function () {
-          console.log("Body: " + body);
-      });
-      res.writeHead(200, {"Content-Type": "text/html"});
-      res.end("post received");
+    console.log("POST");
+    let body = "";
+    req.on("data", function (data) {
+      body += data;
+    });
+    req.on("end", function () {
+      let results = JSON.parse(body);
+      console.log("Body: ", results);
+      const testGrader = new TestGrader();
+      const score = testGrader.getScore(results);
+      console.log("score", score);
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.end(JSON.stringify(score));
+    });
   }
 });
 
