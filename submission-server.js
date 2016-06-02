@@ -19,9 +19,8 @@ server = http.createServer( function(req, res) {
     req.on("end", function () {
       let results = JSON.parse(body);
       console.log("Body: ", results);
-      const testGrader = new TestGrader();
-      const score = testGrader.getScore(results);
-      console.log("score", score);
+      const testGrader = new TestGrader(decimals=1);
+      const score = testGrader.getScore(results, maxScore=9);
       res.writeHead(200, {"Content-Type": "application/json"});
       res.end(JSON.stringify(score));
     });

@@ -1,14 +1,19 @@
 class TestGrader {
   
+  constructor(decimals=1) {
+    this.decimals = decimals;
+  }
+  
   getScore(results, maxScore=10) {
     const passes = results.testResults.passes
     const numTests = results.testResults.tests;
     const proportion =  passes / (numTests || 1); // avoid divide-by-zero
     const lintScore = this.getLintScore(results.lintResults);
+    const testScore = this.roundScore(proportion * maxScore, this.decimals);
     let score = {
-      testScore: proportion * maxScore,
+      testScore: testScore,
       lintScore: lintScore,
-      total: proportion * maxScore + lintScore
+      total: testScore + lintScore
     };
     return score;
   }
@@ -21,6 +26,10 @@ class TestGrader {
       }
     }
     return lintScore;
+  }
+  
+  roundScore(score, decimals) {
+    return Math.round(score * Math.pow(10, decimals)) / Math.pow(10, decimals);
   }
 }
 
